@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --open --aot",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod --base-href=/project/"
+    "deploy": "ng build --aot --prod --base-href=/project/ --output-hashing none"
   },
   "private": true,
   "dependencies": {
