@@ -91,6 +91,15 @@ MIT
 @angular/router
 MIT
 
+@ngx-loading-bar/core
+MIT
+
+@ngx-loading-bar/http-client
+MIT
+
+@ngx-loading-bar/router
+MIT
+
 angularx-social-login
 MIT
 The MIT License
