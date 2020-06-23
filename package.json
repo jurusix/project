@@ -1,5 +1,5 @@
 {
-  "name": "test-cicd",
+  "name": "pwa-template",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
@@ -22,6 +22,9 @@
     "@angular/platform-browser": "~9.1.11",
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
+    "@ngx-loading-bar/core": "^5.0.0",
+    "@ngx-loading-bar/http-client": "^5.0.0",
+    "@ngx-loading-bar/router": "^5.0.0",
     "angularx-social-login": "^3.0.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

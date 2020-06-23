@@ -1,27 +1,15 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Login</h1>
-  <mat-grid-list cols="2"
-                 rowHeight="350px">
-    <mat-grid-tile [colspan]="2"
-                   [rowspan]="1">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            Login
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <div class="example-button-row">
-            <button mat-raised-button
-                    (click)="login(type.Google)">Login Google
-            </button>
-
-            <button mat-raised-button
-                    (click)="login(type.Facebook)">Login FB
-            </button>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <h1>Social Login</h1>
+  <mat-divider></mat-divider>
+  <br>
+  <p>
+    <button mat-raised-button
+            (click)="login(type.Google)">Google Login
+    </button>
+  </p>
+  <p>
+    <button mat-raised-button
+            (click)="login(type.Facebook)">Facebook Login
+    </button>
+  </p>
 </div>

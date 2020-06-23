@@ -30,14 +30,7 @@ export class AuthGuard implements CanActivate {
 
     this.authService.redirectUrl = url;
 
-    const sessionId = 123456789;
-
-    const navigationExtras: NavigationExtras = {
-      queryParams: { session_id: sessionId },
-      fragment: 'anchor'
-    };
-
-    this.router.navigate(['/login'], navigationExtras);
+    this.router.navigate(['/login']);
     return false;
   }
 }

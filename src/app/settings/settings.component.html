@@ -1,0 +1,16 @@
+<div class="grid-container">
+  <h1>Settings</h1>
+  <mat-divider></mat-divider>
+  <br>
+  <h3>PWA Theme</h3>
+  <mat-button-toggle-group [(ngModel)]="appService.activeTheme">
+    <mat-button-toggle value="{{themeMode.Default}}"
+                       (click)="changeTheme(themeMode.Default)">
+      Default
+    </mat-button-toggle>
+    <mat-button-toggle value="{{themeMode.Dark}}"
+                       (click)="changeTheme(themeMode.Dark)">
+      Dark
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>

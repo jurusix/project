@@ -5,6 +5,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { SocialUser } from 'angularx-social-login';
 import { SocialAuthService } from 'angularx-social-login';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 
 @Component({
   selector: 'app-navigation',
@@ -23,7 +24,8 @@ export class NavigationComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     public authService: AuthService,
-    private socAuthService: SocialAuthService) { }
+    private socAuthService: SocialAuthService,
+    public loader: LoadingBarService) { }
 
   ngOnInit() {
     this.socAuthService.authState.subscribe((user) => {
@@ -34,5 +36,4 @@ export class NavigationComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
-
 }
