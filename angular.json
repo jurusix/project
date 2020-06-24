@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "test-cicd": {
+    "pwa-template": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/test-cicd",
+            "outputPath": "dist/pwa-template",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "test-cicd:build"
+            "browserTarget": "pwa-template:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "test-cicd:build:production"
+              "browserTarget": "pwa-template:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "test-cicd:build"
+            "browserTarget": "pwa-template:build"
           }
         },
         "test": {
@@ -110,16 +110,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "test-cicd:serve"
+            "devServerTarget": "pwa-template:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "test-cicd:serve:production"
+              "devServerTarget": "pwa-template:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "test-cicd"
+  "defaultProject": "pwa-template"
 }

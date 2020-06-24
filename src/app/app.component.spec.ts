@@ -20,7 +20,7 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'test-cicd'`, () => {
+  it(`should have as title 'pwa-template'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
   });
@@ -29,6 +29,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('test-cicd app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('pwa-template app is running!');
   });
 });

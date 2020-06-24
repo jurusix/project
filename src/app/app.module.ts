@@ -28,6 +28,7 @@ import {
   FacebookLoginProvider
 } from 'angularx-social-login';
 import { SettingsComponent } from './settings/settings.component';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -68,13 +69,11 @@ import { SettingsComponent } from './settings/settings.component';
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '989994680832-9prnau0uu3mfgirlr9gsdnd07fqg84lb.apps.googleusercontent.com'
-            ),
+            provider: new GoogleLoginProvider(environment.googleLoginProvider),
           },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('1611291312365358'),
+            provider: new FacebookLoginProvider(environment.facebookLoginProvider),
           },
         ],
       } as SocialAuthServiceConfig,
