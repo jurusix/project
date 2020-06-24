@@ -6,6 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { SocialUser } from 'angularx-social-login';
 import { SocialAuthService } from 'angularx-social-login';
 import { LoadingBarService } from '@ngx-loading-bar/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -25,7 +26,15 @@ export class NavigationComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     public authService: AuthService,
     private socAuthService: SocialAuthService,
-    public loader: LoadingBarService) { }
+    public loader: LoadingBarService,
+    private router: Router) {
+    const path = localStorage.getItem('navigate-path-workaround');
+
+    if (path) {
+      localStorage.removeItem('path');
+      this.router.navigate([path]);
+    }
+  }
 
   ngOnInit() {
     this.socAuthService.authState.subscribe((user) => {

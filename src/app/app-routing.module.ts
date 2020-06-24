@@ -9,20 +9,23 @@ import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  }, {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard]
-  },
-  {
+  }, {
     path: 'login',
     component: LoginComponent
-  },
-  {
+  }, {
     path: 'settings',
     component: SettingsComponent
-  },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent }
+  }, {
+    path: '**',
+    component: PageNotFoundComponent
+  }
 ];
 
 @NgModule({

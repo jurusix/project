@@ -20,12 +20,12 @@ export class AppService {
     ) as HTMLLinkElement;
 
     if (themeLink) {
-      themeLink.href = `/assets/${theme}.css`;
+      themeLink.href = `/assets/css/${theme}.css`;
     } else {
       const style = this.document.createElement('link');
       style.id = 'themeAsset';
       style.rel = 'stylesheet';
-      style.href = `/assets/${theme}.css`;
+      style.href = `/assets/css/${theme}.css`;
       this.head.appendChild(style);
     }
 
