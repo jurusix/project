@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { ThemeMode } from './enum/theme-mode';
+import { ThemeMode } from './core/enums/theme-mode';
 
 @Injectable({ providedIn: 'root' })
 export class AppService {

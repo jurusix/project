@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { AuthService } from '../core/auth/auth.service';
 import { NavigationExtras, Router } from '@angular/router';
-import { SocialLogin } from '../enum/social-login';
+import { SocialLogin } from '../core/enums/social-login';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
 

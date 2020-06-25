@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
-import { SocialLogin } from '../enum/social-login';
+import { SocialLogin } from '../enums/social-login';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +10,7 @@ export class AuthService {
   user: SocialUser;
   redirectUrl: string;
 
-  constructor(
-    private router: Router,
-    private socAuthService: SocialAuthService) { }
+  constructor(private socAuthService: SocialAuthService) { }
 
   login(type: SocialLogin): Promise<SocialUser> {
     return new Promise((resolve, reject) => {
@@ -23,6 +20,7 @@ export class AuthService {
       this.socAuthService.signIn(provider).then(
         user => {
           this.user = user;
+          sessionStorage.setItem('user', JSON.stringify(user));
           resolve();
         },
         error => {
@@ -48,14 +46,19 @@ export class AuthService {
     return provider;
   }
 
-  logout(): void {
-
-    this.socAuthService.signOut().then(
-      () => {
-        this.user = null;
-        this.router.navigate(['/login']);
-      },
-      error => console.error(error)
-    );
+  logout(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.socAuthService.signOut().then(
+        () => {
+          this.user = null;
+          sessionStorage.removeItem('user');
+          resolve();
+        },
+        error => {
+          const err = typeof error === 'object' ? error.error : error;
+          reject(err);
+        }
+      );
+    });
   }
 }
