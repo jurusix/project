@@ -34,10 +34,10 @@ jobs:
     - name: Build
       run: |
         npm install
-        npm run-script deploy
+        npm run-script deploy-shell
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: dist/pwa-template
+        FOLDER: dist/pwa-template/browser

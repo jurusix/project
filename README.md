@@ -5,9 +5,9 @@ This template should serve as All in One pack to accelerate the development of n
 ## Features
 
 - Responsive app shell (Side navigation & Dashboard)
-- Social Login (Facebook, Google)
+- Social Login (Facebook, Google) :star: [angularx-social-login](https://github.com/abacritt/angularx-social-login)
 - Dark mode (Purple & Green theme)
-- Loading bar (HttpClient request, routing)
+- Loading bar (HttpClient request, routing) :star: [@ngx-loading-bar](https://github.com/aitboudad/ngx-loading-bar)
 
 ## Development server
 
@@ -16,6 +16,10 @@ Run `npm install` and `npm start` for a dev server. The app will automatically o
 ## Build
 
 Run `npm run deploy` to build the PWA. The build artifacts will be stored in the `dist/pwa-template/` directory.
+
+## Build with the shell (SEO friendly)
+
+Run `npm run deploy-shell` to build the PWA with the shell. The build artifacts will be stored in the `dist/pwa-template/` directory.
 
 ## Demo
 

@@ -51,13 +51,15 @@
                       mode="indeterminate">
     </mat-progress-bar>
     <mat-toolbar color="primary">
-      <button type="button"
-              aria-label="Toggle sidenav"
-              mat-icon-button
-              (click)="drawer.toggle()"
-              *ngIf="(isHandset$ | async) || !drawer.opened">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+      <ng-container *ngIf="(isHandset$ | async) || !drawer.opened">
+        <button type="button"
+                aria-label="Toggle sidenav"
+                mat-icon-button
+                (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        Logo
+      </ng-container>
       <span class="fill-remaining-space"></span>
       <span>{{authService.user?.name || 'Anonymous'}}</span>
     </mat-toolbar>

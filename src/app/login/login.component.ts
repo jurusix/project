@@ -18,7 +18,7 @@ export class LoginComponent {
     private router: Router,
     private snackBar: MatSnackBar) { }
 
-  login(type: SocialLogin) {
+  login(type: SocialLogin): void {
 
     this.authService.login(type).then(
       () => {

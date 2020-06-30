@@ -7,8 +7,8 @@ import { SocialLogin } from '../enums/social-login';
 })
 export class AuthService {
 
-  user: SocialUser;
-  redirectUrl: string;
+  user: SocialUser | null = null;
+  redirectUrl = '';
 
   constructor(private socAuthService: SocialAuthService) { }
 
