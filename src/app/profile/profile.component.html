@@ -2,8 +2,9 @@
   <h1>Readonly profile</h1>
   <mat-divider></mat-divider>
   <br>
-  <img [src]="authService.user?.photoUrl"
-       alt="profile_foto">
+  <img [src]="photoUrl"
+       alt="profile_foto"
+       width="200">
   <br>
   <br>
   <form [formGroup]="profile">

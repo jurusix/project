@@ -27,7 +27,8 @@
     "@ngx-loading-bar/core": "^5.0.0",
     "@ngx-loading-bar/http-client": "^5.0.0",
     "@ngx-loading-bar/router": "^5.0.0",
-    "angularx-social-login": "^3.0.1",
+    "angular-oauth2-oidc": "^9.2.2",
+    "angular-oauth2-oidc-jwks": "^9.0.0",
     "rxjs": "~6.5.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

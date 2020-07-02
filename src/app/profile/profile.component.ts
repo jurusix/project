@@ -9,12 +9,14 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class ProfileComponent {
   profile: FormGroup;
+  photoUrl: string | undefined;
 
   constructor(public authService: AuthService, fb: FormBuilder) {
+    this.photoUrl = authService.identityClaims?.picture;
     this.profile = fb.group({
-      firstName: fb.control(authService.user?.firstName),
-      lastName: fb.control(authService.user?.lastName),
-      email: fb.control(authService.user?.email),
+      firstName: fb.control(authService.identityClaims?.given_name),
+      lastName: fb.control(authService.identityClaims?.family_name),
+      email: fb.control(authService.identityClaims?.email),
     });
   }
 }

@@ -1,64 +1,143 @@
 import { Injectable } from '@angular/core';
-import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
-import { SocialLogin } from '../enums/social-login';
+import { Router } from '@angular/router';
+import { OAuthService, OAuthEvent } from 'angular-oauth2-oidc';
+import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { User } from './user.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  user: SocialUser | null = null;
-  redirectUrl = '';
+  private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
+  private redirectUrl = '/dashboard';
+  private isDoneLoadingSubject$ = new ReplaySubject<boolean>();
+  public isDoneLoading$ = this.isDoneLoadingSubject$.asObservable();
 
-  constructor(private socAuthService: SocialAuthService) { }
+  public canActivateProtectedRoutes$: Observable<boolean> = combineLatest([
+    this.isAuthenticated$,
+    this.isDoneLoading$
+  ]).pipe(map(values => values.every(b => b)));
 
-  login(type: SocialLogin): Promise<SocialUser> {
-    return new Promise((resolve, reject) => {
+  private navigateToLoginPage(): void {
+    this.redirectUrl = this.router.url;
+    this.router.navigateByUrl('/login');
+  }
 
-      const provider = this.getProvider(type);
+  constructor(
+    private oauthService: OAuthService,
+    private router: Router,
+  ) {
 
-      this.socAuthService.signIn(provider).then(
-        user => {
-          this.user = user;
-          sessionStorage.setItem('user', JSON.stringify(user));
-          resolve();
-        },
-        error => {
-          this.user = null;
-          console.error(error);
-          const err = typeof error === 'object' ? error.error : error;
-          reject(err);
-        }
-      );
+    // TODO: Improve this setup.
+    window.addEventListener('storage', (event) => {
+      // The `key` is `null` if the event was caused by `.clear()`
+      if (event.key !== 'access_token' && event.key !== null) {
+        return;
+      }
+
+      console.warn('Noticed changes to access_token (most likely from another tab), updating isAuthenticated');
+      this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
+
+      if (!this.oauthService.hasValidAccessToken()) {
+        this.navigateToLoginPage();
+      }
     });
+
+    this.oauthService.events
+      .subscribe(_ => {
+        this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
+      });
+
+    this.oauthService.events
+      .pipe(filter(e => ['token_received'].includes(e.type)))
+      .subscribe(e => this.oauthService.loadUserProfile());
+
+
+    this.oauthService.events
+      .pipe(filter(e => ['session_terminated', 'session_error', 'logout'].includes(e.type)))
+      .subscribe(e => this.navigateToLoginPage());
+
+    this.oauthService.setupAutomaticSilentRefresh();
   }
 
-  private getProvider(type: SocialLogin): string {
-    let provider = '';
-    switch (type) {
-      case SocialLogin.Facebook:
-        provider = FacebookLoginProvider.PROVIDER_ID;
-        break;
-      case SocialLogin.Google:
-        provider = GoogleLoginProvider.PROVIDER_ID;
-        break;
-    }
-    return provider;
-  }
+  public runInitialLoginSequence(): Promise<void> {
 
-  logout(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.socAuthService.signOut().then(
-        () => {
-          this.user = null;
-          sessionStorage.removeItem('user');
-          resolve();
-        },
-        error => {
-          const err = typeof error === 'object' ? error.error : error;
-          reject(err);
+    return this.oauthService.loadDiscoveryDocument()
+
+      // 1. HASH LOGIN:
+      // Try to log in via hash fragment after redirect back
+      // from IdServer from initImplicitFlow:
+      .then(() => this.oauthService.tryLogin())
+
+      .then(() => {
+        if (this.oauthService.hasValidAccessToken()) {
+          return Promise.resolve();
         }
-      );
-    });
+
+        // 2. SILENT LOGIN:
+        // Try to log in via a refresh because then we can prevent
+        // needing to redirect the user:
+        return this.oauthService.silentRefresh()
+          .then(() => Promise.resolve())
+          .catch(result => {
+            // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
+            // Only the ones where it's reasonably sure that sending the
+            // user to the IdServer will help.
+            const errorResponsesRequiringUserInteraction = [
+              'interaction_required',
+              'login_required',
+              'account_selection_required',
+              'consent_required',
+            ];
+
+            if (result
+              && result.reason
+              && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
+
+              // 3. ASK FOR LOGIN:
+              // At this point we know for sure that we have to ask the
+              // user to log in, so we redirect them to the IdServer to
+              // enter credentials.
+              //
+              // Enable this to ALWAYS force a user to login.
+              // this.oauthService.initImplicitFlow();
+              //
+              // Instead, we'll now do this:
+              console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
+              return Promise.resolve();
+            }
+
+            // We can't handle the truth, just pass on the problem to the
+            // next handler.
+            return Promise.reject(result);
+          });
+      })
+
+      .then(() => {
+        this.isDoneLoadingSubject$.next(true);
+
+        if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
+          let stateUrl = this.oauthService.state;
+          if (stateUrl.startsWith('/') === false) {
+            stateUrl = decodeURIComponent(stateUrl);
+          }
+          console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
+          this.router.navigateByUrl(stateUrl);
+        }
+        else {
+          this.router.navigateByUrl(this.redirectUrl);
+        }
+      })
+      .catch(() => this.isDoneLoadingSubject$.next(true));
   }
+
+  public login(targetUrl?: string): void {
+    this.oauthService.initLoginFlow(targetUrl || this.redirectUrl);
+  }
+
+  public logout(): void { this.oauthService.logOut(); }
+  public refresh(): Promise<OAuthEvent> { return this.oauthService.silentRefresh(); }
+  public get identityClaims(): User { return this.oauthService.getIdentityClaims(); }
+
 }

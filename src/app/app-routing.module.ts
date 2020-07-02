@@ -13,6 +13,9 @@ const routes: Routes = [
     redirectTo: '/login',
     pathMatch: 'full'
   }, {
+    path: 'oauth2callback',
+    component: LoginComponent
+  }, {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard]

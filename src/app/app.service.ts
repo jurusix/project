@@ -7,21 +7,15 @@ import { isPlatformBrowser } from '@angular/common';
 export class AppService {
 
   activeTheme = ThemeMode.Default;
-
   private head: HTMLElement;
+
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: object
-  ) {
+    @Inject(PLATFORM_ID) private platformId: object) {
     this.head = this.document.getElementsByTagName('head')[0];
-
-    if (isPlatformBrowser(this.platformId)) {
-      const theme = localStorage.getItem('theme-name') as ThemeMode || ThemeMode.Default;
-      this.changeTheme(theme);
-    }
   }
 
-  changeTheme(theme: ThemeMode): void {
+  setTheme(theme: ThemeMode): void {
     const themeLink = this.document.getElementById(
       'themeAsset'
     ) as HTMLLinkElement;

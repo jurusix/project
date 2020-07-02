@@ -6,8 +6,8 @@ import { AuthService } from '../core/auth/auth.service';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { AppService } from '../app.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { isPlatformBrowser } from '@angular/common';
+import { ThemeMode } from '../core/enums/theme-mode';
 
 
 @Component({
@@ -22,37 +22,40 @@ export class AppShellComponent {
       shareReplay()
     );
 
+  isAuthenticated: Observable<boolean>;
+
   constructor(
     private breakpointObserver: BreakpointObserver,
-    public authService: AuthService,
+    private authService: AuthService,
     public loader: LoadingBarService,
     private router: Router,
-    private snackBar: MatSnackBar,
     @Inject(PLATFORM_ID) private platformId: object,
     private appService: AppService) {
+    this.isAuthenticated = authService.isAuthenticated$;
+
     if (isPlatformBrowser(this.platformId)) {
+      const theme = localStorage.getItem('theme-name') as ThemeMode || ThemeMode.Default;
       const path = localStorage.getItem('navigate-path-workaround');
-      const user = sessionStorage.getItem('user');
+
+      this.appService.setTheme(theme);
 
       if (path) {
         localStorage.removeItem('path');
         this.router.navigate([path]);
       }
-
-      if (user) {
-        this.authService.user = JSON.parse(user);
-      }
     }
+
+    this.authService.runInitialLoginSequence();
   }
 
-  logout(): void {
-    this.authService.logout().then(
-      () => this.router.navigate(['/login']),
-      err => this.snackBar.open(err, '', { duration: 8000 })
-    );
-  }
+  logout(): void { this.authService.logout(); }
 
   prepareRoute(outlet: RouterOutlet): void {
     return outlet?.activatedRouteData?.animation;
+  }
+
+  get name(): string | undefined {
+    return this.authService.identityClaims
+      ? this.authService.identityClaims?.name : 'Anonymous';
   }
 }

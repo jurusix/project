@@ -16,7 +16,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  changeTheme(mode: ThemeMode) {
-    this.appService.changeTheme(mode);
+  changeTheme(mode: ThemeMode): void {
+    this.appService.setTheme(mode);
   }
 }
