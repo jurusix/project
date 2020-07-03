@@ -40,7 +40,6 @@ export class AppShellComponent {
     }
 
     this.appService.setTheme(theme);
-
     this.authService.runInitialLoginSequence();
   }
 

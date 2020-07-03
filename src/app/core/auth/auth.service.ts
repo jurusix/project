@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { OAuthService, OAuthEvent } from 'angular-oauth2-oidc';
+import { OAuthService, OAuthEvent, OAuthErrorEvent } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { User } from './user.model';
@@ -45,7 +45,8 @@ export class AuthService {
     });
 
     this.oauthService.events
-      .subscribe(_ => {
+      .subscribe(e => {
+        (e instanceof OAuthErrorEvent) ? console.error(e) : console.warn(e);
         this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
       });
 
@@ -72,7 +73,6 @@ export class AuthService {
 
       .then(() => {
         if (this.oauthService.hasValidAccessToken()) {
-          console.log('hasValidAccessToken');
           return Promise.resolve();
         }
         console.log('SILENT LOGIN');
@@ -82,9 +82,6 @@ export class AuthService {
         return this.oauthService.silentRefresh()
           .then(() => Promise.resolve())
           .catch(result => {
-            // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
-            // Only the ones where it's reasonably sure that sending the
-            // user to the IdServer will help.
             const errorResponsesRequiringUserInteraction = [
               'interaction_required',
               'login_required',
@@ -102,15 +99,13 @@ export class AuthService {
               // enter credentials.
               //
               // Enable this to ALWAYS force a user to login.
-              // this.oauthService.initImplicitFlow();
+              this.oauthService.initImplicitFlow();
               //
               // Instead, we'll now do this:
               console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
               return Promise.resolve();
             }
 
-            // We can't handle the truth, just pass on the problem to the
-            // next handler.
             return Promise.reject(result);
           });
       })
