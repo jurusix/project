@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 
 export const googleAuthCodeFlowConfig: AuthConfig = {
   issuer: 'https://accounts.google.com',
-  redirectUri: window.location.origin + '/oauth2callback',
+  redirectUri: window.location.origin + environment.redirectUri,
   clientId: environment.googleLoginProvider,
   scope: 'openid profile email',
   strictDiscoveryDocumentValidation: false,

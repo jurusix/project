@@ -122,12 +122,13 @@ export class AuthService {
           if (stateUrl.startsWith('/') === false) {
             stateUrl = decodeURIComponent(stateUrl);
           }
-          console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
-          this.router.navigateByUrl(stateUrl);
+          if (stateUrl !== '/login') {
+            console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
+            this.router.navigateByUrl(stateUrl);
+          }
         }
-        else {
-          this.router.navigateByUrl(this.redirectUrl);
-        }
+
+        this.router.navigateByUrl(this.redirectUrl);
       })
       .catch(() => this.isDoneLoadingSubject$.next(true));
   }
