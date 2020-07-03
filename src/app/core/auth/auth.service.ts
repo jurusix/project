@@ -72,9 +72,10 @@ export class AuthService {
 
       .then(() => {
         if (this.oauthService.hasValidAccessToken()) {
+          console.log('hasValidAccessToken');
           return Promise.resolve();
         }
-
+        console.log('SILENT LOGIN');
         // 2. SILENT LOGIN:
         // Try to log in via a refresh because then we can prevent
         // needing to redirect the user:
