@@ -32,13 +32,19 @@ export class AppShellComponent {
     this.isAuthenticated = authService.isAuthenticated$;
 
     const theme = localStorage.getItem('theme-name') as ThemeMode || ThemeMode.Default;
-    const path = localStorage.getItem('navigate-path-workaround');
+    const navigatePath = localStorage.getItem('navigate-path-workaround');
+    const callbackPath = localStorage.getItem('navigate-path-workaround');
 
     this.appService.setTheme(theme);
 
-    if (path) {
+    if (navigatePath) {
       localStorage.removeItem('path');
-      this.router.navigate([path]);
+      this.router.navigate([navigatePath]);
+    }
+
+    if (callbackPath) {
+      localStorage.removeItem('callback-path-workaround');
+      this.router.navigateByUrl(callbackPath);
     }
 
     this.authService.runInitialLoginSequence();

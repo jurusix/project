@@ -1,0 +1,5 @@
+<script>
+  const path = window.location.pathname.slice(1) + window.location.search;
+  localStorage.setItem('callback-path-workaround', path);
+  window.location.href = '../';
+</script>
