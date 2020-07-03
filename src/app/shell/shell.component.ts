@@ -33,7 +33,7 @@ export class AppShellComponent {
 
     const theme = localStorage.getItem('theme-name') as ThemeMode || ThemeMode.Default;
     const navigatePath = localStorage.getItem('navigate-path-workaround');
-    const callbackPath = localStorage.getItem('navigate-path-workaround');
+    const callbackPath = localStorage.getItem('callback-path-workaround');
 
     this.appService.setTheme(theme);
 
