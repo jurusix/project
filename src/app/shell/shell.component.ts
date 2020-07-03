@@ -35,14 +35,13 @@ export class AppShellComponent {
     const navigatePath = localStorage.getItem('navigate-path-workaround');
     const callbackPath = localStorage.getItem('callback-path-workaround');
 
-    if (callbackPath) {
-      localStorage.removeItem('callback-path-workaround');
-      localStorage.removeItem('navigate-path-workaround');
+    /* if (callbackPath) {
+      this.clearAfterWorkaround();
       this.router.navigateByUrl(`/${navigatePath + callbackPath}`);
-    }
+    } */
 
     if (navigatePath) {
-      localStorage.removeItem('navigate-path-workaround');
+      this.clearAfterWorkaround();
       this.router.navigate([navigatePath]);
     }
 
@@ -60,5 +59,10 @@ export class AppShellComponent {
   get name(): string | undefined {
     return this.authService.identityClaims
       ? this.authService.identityClaims?.name : 'Anonymous';
+  }
+
+  private clearAfterWorkaround(): void {
+    localStorage.removeItem('callback-path-workaround');
+    localStorage.removeItem('navigate-path-workaround');
   }
 }
