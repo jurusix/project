@@ -28,7 +28,7 @@
               "src/assets",
               "src/404.html",
               "src/silent-refresh.html",
-              "oauth2callback.html"
+              "src/oauth2callback.html"
             ],
             "styles": [],
             "scripts": []
