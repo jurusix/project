@@ -42,7 +42,8 @@ export class AppShellComponent {
 
     if (navigatePath) {
       this.clearAfterWorkaround();
-      this.router.navigate([navigatePath]);
+      console.log('clear');
+      // this.router.navigate([navigatePath]);
     }
 
     this.appService.setTheme(theme);
