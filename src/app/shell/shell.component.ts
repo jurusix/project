@@ -41,7 +41,7 @@ export class AppShellComponent {
     } */
 
     if (navigatePath) {
-      this.clearAfterWorkaround();
+      // this.clearAfterWorkaround();
       console.log('clear');
       // this.router.navigate([navigatePath]);
     }
