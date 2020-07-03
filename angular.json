@@ -27,8 +27,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/404.html",
-              "src/silent-refresh.html",
-              "src/oauth2callback.html"
+              "src/silent-refresh.html"
             ],
             "styles": [],
             "scripts": []

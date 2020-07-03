@@ -35,17 +35,18 @@ export class AppShellComponent {
     const navigatePath = localStorage.getItem('navigate-path-workaround');
     const callbackPath = localStorage.getItem('callback-path-workaround');
 
-    this.appService.setTheme(theme);
+    if (callbackPath) {
+      localStorage.removeItem('callback-path-workaround');
+      localStorage.removeItem('navigate-path-workaround');
+      this.router.navigateByUrl(`/${navigatePath + callbackPath}`);
+    }
 
     if (navigatePath) {
-      localStorage.removeItem('path');
+      localStorage.removeItem('navigate-path-workaround');
       this.router.navigate([navigatePath]);
     }
 
-    if (callbackPath) {
-      localStorage.removeItem('callback-path-workaround');
-      this.router.navigateByUrl(callbackPath);
-    }
+    this.appService.setTheme(theme);
 
     this.authService.runInitialLoginSequence();
   }
