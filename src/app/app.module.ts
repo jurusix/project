@@ -22,7 +22,7 @@ import { RouterModule } from '@angular/router';
     ProfileComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule,
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
     AppRoutingModule,

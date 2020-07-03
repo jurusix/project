@@ -8,8 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --aot --prod",
-    "deploy-shell": "ng run pwa-template:app-shell:production"
+    "deploy": "ng build --aot --prod"
   },
   "private": true,
   "dependencies": {
@@ -22,7 +21,6 @@
     "@angular/material": "^10.0.0",
     "@angular/platform-browser": "~10.0.0",
     "@angular/platform-browser-dynamic": "~10.0.0",
-    "@angular/platform-server": "~10.0.0",
     "@angular/router": "~10.0.0",
     "@ngx-loading-bar/core": "^5.0.0",
     "@ngx-loading-bar/http-client": "^5.0.0",

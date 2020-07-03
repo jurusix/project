@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -6,7 +6,6 @@ import { AuthService } from '../core/auth/auth.service';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { AppService } from '../app.service';
-import { isPlatformBrowser } from '@angular/common';
 import { ThemeMode } from '../core/enums/theme-mode';
 
 
@@ -29,20 +28,17 @@ export class AppShellComponent {
     private authService: AuthService,
     public loader: LoadingBarService,
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: object,
     private appService: AppService) {
     this.isAuthenticated = authService.isAuthenticated$;
 
-    if (isPlatformBrowser(this.platformId)) {
-      const theme = localStorage.getItem('theme-name') as ThemeMode || ThemeMode.Default;
-      const path = localStorage.getItem('navigate-path-workaround');
+    const theme = localStorage.getItem('theme-name') as ThemeMode || ThemeMode.Default;
+    const path = localStorage.getItem('navigate-path-workaround');
 
-      this.appService.setTheme(theme);
+    this.appService.setTheme(theme);
 
-      if (path) {
-        localStorage.removeItem('path');
-        this.router.navigate([path]);
-      }
+    if (path) {
+      localStorage.removeItem('path');
+      this.router.navigate([path]);
     }
 
     this.authService.runInitialLoginSequence();
