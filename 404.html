@@ -1,6 +1,8 @@
 <script>
   const path = window.location.pathname.slice(1);
   const search = window.location.search;
+  alert(path);
+  alert(search);
   localStorage.setItem('navigate-path-workaround', path);
   localStorage.setItem('callback-path-workaround', search);
   window.location.href = '../';
