@@ -76,43 +76,40 @@ export class AuthService {
           return Promise.resolve();
         }
 
-        console.log('NO SILENT LOGIN');
-        return Promise.reject();
+        // 2. SILENT LOGIN:
+        // Try to log in via a refresh because then we can prevent
+        // needing to redirect the user:
+        return this.oauthService.silentRefresh()
+          .then(() => Promise.resolve())
+          .catch(result => {
+            const errorResponsesRequiringUserInteraction = [
+              'interaction_required',
+              'login_required',
+              'account_selection_required',
+              'consent_required',
+            ];
 
-          // 2. SILENT LOGIN:
-          // Try to log in via a refresh because then we can prevent
-          // needing to redirect the user:
-          /* return this.oauthService.silentRefresh()
-            .then(() => Promise.resolve())
-            .catch(result => {
-              const errorResponsesRequiringUserInteraction = [
-                'interaction_required',
-                'login_required',
-                'account_selection_required',
-                'consent_required',
-              ];
+            if (result
+              && result.reason
+              && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
 
-              if (result
-                && result.reason
-                && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
+              // 3. ASK FOR LOGIN:
+              // At this point we know for sure that we have to ask the
+              // user to log in, so we redirect them to the IdServer to
+              // enter credentials.
+              //
+              // Enable this to ALWAYS force a user to login.
+              this.oauthService.initImplicitFlow();
+              //
+              // Instead, we'll now do this:
+              console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
+              return Promise.resolve();
+            }
 
-                // 3. ASK FOR LOGIN:
-                // At this point we know for sure that we have to ask the
-                // user to log in, so we redirect them to the IdServer to
-                // enter credentials.
-                //
-                // Enable this to ALWAYS force a user to login.
-                this.oauthService.initImplicitFlow();
-                //
-                // Instead, we'll now do this:
-                console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
-                return Promise.resolve();
-              }
+            return Promise.reject(result);
+          });
+      })
 
-              return Promise.reject(result);
-            });
-        })
-   */   })
       .then(() => {
         this.isDoneLoadingSubject$.next(true);
 
