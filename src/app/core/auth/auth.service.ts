@@ -77,7 +77,7 @@ export class AuthService {
         }
 
         console.log('NO SILENT LOGIN');
-        return Promise.reject()
+        return Promise.reject();
 
           // 2. SILENT LOGIN:
           // Try to log in via a refresh because then we can prevent
@@ -112,32 +112,33 @@ export class AuthService {
               return Promise.reject(result);
             });
         })
-   */
-          .then(() => {
-            this.isDoneLoadingSubject$.next(true);
+   */   })
+      .then(() => {
+        this.isDoneLoadingSubject$.next(true);
 
-            if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
-              let stateUrl = this.oauthService.state;
-              if (stateUrl.startsWith('/') === false) {
-                stateUrl = decodeURIComponent(stateUrl);
-              }
-              if (stateUrl !== '/login') {
-                console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
-                this.router.navigateByUrl(stateUrl);
-              }
-            }
+        if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
+          let stateUrl = this.oauthService.state;
+          if (stateUrl.startsWith('/') === false) {
+            stateUrl = decodeURIComponent(stateUrl);
+          }
+          if (stateUrl !== '/login') {
+            console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
+            this.router.navigateByUrl(stateUrl);
+          }
+        }
 
-            this.router.navigateByUrl(this.redirectUrl);
-          })
-          .catch(() => this.isDoneLoadingSubject$.next(true));
-      }
+        this.router.navigateByUrl(this.redirectUrl);
+      })
+      .catch(() => this.isDoneLoadingSubject$.next(true));
 
-  public login(targetUrl ?: string): void {
-        this.oauthService.initLoginFlow(targetUrl || this.redirectUrl);
-      }
+  }
+
+  public login(targetUrl?: string): void {
+    this.oauthService.initLoginFlow(targetUrl || this.redirectUrl);
+  }
 
   public logout(): void { this.oauthService.logOut(); }
-  public refresh(): Promise < OAuthEvent > { return this.oauthService.silentRefresh(); }
+  public refresh(): Promise<OAuthEvent> { return this.oauthService.silentRefresh(); }
   public get identityClaims(): User { return this.oauthService.getIdentityClaims(); }
 
 }
