@@ -33,6 +33,12 @@ export class AppShellComponent {
 
     const theme = localStorage.getItem('theme-name') as ThemeMode || ThemeMode.Default;
     const navigatePath = localStorage.getItem('navigate-path-workaround');
+    const callbackPath = localStorage.getItem('callback-path-workaround');
+
+    if (callbackPath) {
+      localStorage.removeItem('callback-path-workaround');
+      this.router.navigateByUrl(callbackPath);
+    }
 
     if (navigatePath) {
       localStorage.removeItem('navigate-path-workaround');
