@@ -37,10 +37,11 @@ export class AppShellComponent {
 
     if (callbackPath) {
       localStorage.removeItem('callback-path-workaround');
+      localStorage.removeItem('navigate-path-workaround');
+      alert(callbackPath);
       this.router.navigateByUrl(callbackPath);
     }
-
-    if (navigatePath) {
+    else if (navigatePath) {
       localStorage.removeItem('navigate-path-workaround');
       this.router.navigate([navigatePath]);
     }
