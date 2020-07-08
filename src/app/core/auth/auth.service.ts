@@ -75,66 +75,69 @@ export class AuthService {
         if (this.oauthService.hasValidAccessToken()) {
           return Promise.resolve();
         }
-        console.log('SILENT LOGIN');
-        // 2. SILENT LOGIN:
-        // Try to log in via a refresh because then we can prevent
-        // needing to redirect the user:
-        return this.oauthService.silentRefresh()
-          .then(() => Promise.resolve())
-          .catch(result => {
-            const errorResponsesRequiringUserInteraction = [
-              'interaction_required',
-              'login_required',
-              'account_selection_required',
-              'consent_required',
-            ];
 
-            if (result
-              && result.reason
-              && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
+        console.log('NO SILENT LOGIN');
+        return Promise.reject()
 
-              // 3. ASK FOR LOGIN:
-              // At this point we know for sure that we have to ask the
-              // user to log in, so we redirect them to the IdServer to
-              // enter credentials.
-              //
-              // Enable this to ALWAYS force a user to login.
-              this.oauthService.initImplicitFlow();
-              //
-              // Instead, we'll now do this:
-              console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
-              return Promise.resolve();
+          // 2. SILENT LOGIN:
+          // Try to log in via a refresh because then we can prevent
+          // needing to redirect the user:
+          /* return this.oauthService.silentRefresh()
+            .then(() => Promise.resolve())
+            .catch(result => {
+              const errorResponsesRequiringUserInteraction = [
+                'interaction_required',
+                'login_required',
+                'account_selection_required',
+                'consent_required',
+              ];
+
+              if (result
+                && result.reason
+                && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
+
+                // 3. ASK FOR LOGIN:
+                // At this point we know for sure that we have to ask the
+                // user to log in, so we redirect them to the IdServer to
+                // enter credentials.
+                //
+                // Enable this to ALWAYS force a user to login.
+                this.oauthService.initImplicitFlow();
+                //
+                // Instead, we'll now do this:
+                console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
+                return Promise.resolve();
+              }
+
+              return Promise.reject(result);
+            });
+        })
+   */
+          .then(() => {
+            this.isDoneLoadingSubject$.next(true);
+
+            if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
+              let stateUrl = this.oauthService.state;
+              if (stateUrl.startsWith('/') === false) {
+                stateUrl = decodeURIComponent(stateUrl);
+              }
+              if (stateUrl !== '/login') {
+                console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
+                this.router.navigateByUrl(stateUrl);
+              }
             }
 
-            return Promise.reject(result);
-          });
-      })
+            this.router.navigateByUrl(this.redirectUrl);
+          })
+          .catch(() => this.isDoneLoadingSubject$.next(true));
+      }
 
-      .then(() => {
-        this.isDoneLoadingSubject$.next(true);
-
-        if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
-          let stateUrl = this.oauthService.state;
-          if (stateUrl.startsWith('/') === false) {
-            stateUrl = decodeURIComponent(stateUrl);
-          }
-          if (stateUrl !== '/login') {
-            console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
-            this.router.navigateByUrl(stateUrl);
-          }
-        }
-
-        this.router.navigateByUrl(this.redirectUrl);
-      })
-      .catch(() => this.isDoneLoadingSubject$.next(true));
-  }
-
-  public login(targetUrl?: string): void {
-    this.oauthService.initLoginFlow(targetUrl || this.redirectUrl);
-  }
+  public login(targetUrl ?: string): void {
+        this.oauthService.initLoginFlow(targetUrl || this.redirectUrl);
+      }
 
   public logout(): void { this.oauthService.logOut(); }
-  public refresh(): Promise<OAuthEvent> { return this.oauthService.silentRefresh(); }
+  public refresh(): Promise < OAuthEvent > { return this.oauthService.silentRefresh(); }
   public get identityClaims(): User { return this.oauthService.getIdentityClaims(); }
 
 }
