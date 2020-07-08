@@ -1,5 +1,13 @@
 <script>
   const path = window.location.pathname.slice(1);
-  localStorage.setItem('navigate-path-workaround', path);
+  const result = window.location.href.split('#');
+
+  if (result[1]) {
+    localStorage.setItem('callback-path-workaround', '/oauth2callback#' + result[1]);
+  }
+  else {
+    localStorage.setItem('navigate-path-workaround', path);
+  }
+
   window.location.href = '../';
 </script>

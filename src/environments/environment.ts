@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  googleLoginProvider: '989994680832-9prnau0uu3mfgirlr9gsdnd07fqg84lb.apps.googleusercontent.com',
-  redirectUri: '/oauth2callback'
+  googleLoginProvider: '989994680832-9prnau0uu3mfgirlr9gsdnd07fqg84lb.apps.googleusercontent.com'
 };
 
 /*
