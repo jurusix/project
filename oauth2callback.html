@@ -1,12 +1,8 @@
 <script>
-  const path = window.location.pathname.slice(1);
   const search = window.location.search;
 
   if (search) {
     localStorage.setItem('callback-path-workaround', '/oauth2callback' + search);
-  }
-  else {
-    localStorage.setItem('navigate-path-workaround', path);
   }
 
   window.location.href = '../';
