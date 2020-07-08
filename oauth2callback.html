@@ -1,9 +1,0 @@
-<script>
-  const result = window.location.href.split('#');
-
-  if (result[1]) {
-    localStorage.setItem('callback-path-workaround', '/oauth2callback#' + result[1]);
-  }
-
-  window.location.href = '../';
-</script>
