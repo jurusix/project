@@ -1,0 +1,22 @@
+{
+  "en": "Angličtina",
+  "cs": "Čeština",
+  "DASHBOARD": "Nástěnka",
+  "EXPAND": "Rozšířit",
+  "REMOVE": "Odstranit",
+  "PROFILE": "Profil",
+  "LOGIN": "Přihlásit se",
+  "SETTINGS": "Nastavení",
+  "LOGOUT": "Odhlásit se",
+  "AUTHORIZED": "Autorizovaný obsah",
+  "SOCIAL_LOGIN": "Přihlášení prostřednictvím třetí strany",
+  "PWA_THEME": "PWA vzhled",
+  "DEFAULT": "Výchozí",
+  "DARK": "Tmavý",
+  "LANGUAGE": "Jazyk",
+  "CURRENT_LANG": "Aktuální jazyk",
+  "READONLY_PROFILE": "Profil pouze pro čtení",
+  "FIRST_NAME": "Jméno",
+  "LAST_NAME": "Příjmení",
+  "EMAIL": "E-mail"
+}

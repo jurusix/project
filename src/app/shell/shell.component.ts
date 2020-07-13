@@ -7,6 +7,7 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { AppService } from '../app.service';
 import { ThemeMode } from '../core/enums/theme-mode';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 
 @Component({
@@ -28,12 +29,23 @@ export class AppShellComponent {
     private authService: AuthService,
     public loader: LoadingBarService,
     private router: Router,
-    private appService: AppService) {
-    this.isAuthenticated = authService.isAuthenticated$;
-
+    private appService: AppService,
+    private translate: TranslateService) {
+    const localLang = localStorage.getItem('lang');
+    const browserLang = translate.getBrowserLang();
+    const lang = localLang ? localLang : (browserLang.match(/en|cs/) ? browserLang : 'en');
     const theme = localStorage.getItem('theme-name') as ThemeMode || ThemeMode.Default;
     const navigatePath = localStorage.getItem('navigate-path-workaround');
     const callbackPath = localStorage.getItem('callback-path-workaround');
+
+    translate.addLangs(['en', 'cs']);
+    translate.setDefaultLang('en');
+    translate.use(lang);
+    translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      localStorage.setItem('lang', event.lang);
+    });
+
+    this.isAuthenticated = authService.isAuthenticated$;
 
     if (callbackPath) {
       localStorage.removeItem('callback-path-workaround');

@@ -1,0 +1,22 @@
+{
+  "en": "English",
+  "cs": "Czech",
+  "DASHBOARD": "Dashboard",
+  "EXPAND": "Expand",
+  "REMOVE": "Remove",
+  "PROFILE": "Profile",
+  "LOGIN": "Login",
+  "SETTINGS": "Settings",
+  "LOGOUT": "Logout",
+  "AUTHORIZED": "Authorized content",
+  "SOCIAL_LOGIN": "Social Login",
+  "PWA_THEME": "PWA Theme",
+  "DEFAULT": "Default",
+  "DARK": "Dark",
+  "LANGUAGE": "Language",
+  "CURRENT_LANG": "Current language",
+  "READONLY_PROFILE": "Readonly profile",
+  "FIRST_NAME": "First Name",
+  "LAST_NAME": "First Name",
+  "EMAIL": "Email"
+}

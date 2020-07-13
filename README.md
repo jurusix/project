@@ -8,6 +8,7 @@ This template should serve as All in One pack to accelerate the development of n
 - Social Login (Google) :star: [angular-oauth2-oidc](https://github.com/manfredsteyer/angular-oauth2-oidc)
 - Dark mode (Purple & Green theme)
 - Loading bar (HttpClient request, routing) :star: [@ngx-loading-bar](https://github.com/aitboudad/ngx-loading-bar)
+- Internationalization (i18n) :star: [ngx-translate](https://github.com/ngx-translate/core)
 
 ## Development
 

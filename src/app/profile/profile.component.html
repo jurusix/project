@@ -1,5 +1,5 @@
 <div class="grid-container">
-  <h1>Readonly profile</h1>
+  <h1 translate>READONLY_PROFILE</h1>
   <mat-divider></mat-divider>
   <br>
   <img [src]="photoUrl"
@@ -9,21 +9,21 @@
   <br>
   <form [formGroup]="profile">
     <mat-form-field appearance="outline">
-      <mat-label>First Name</mat-label>
+      <mat-label translate>FIRST_NAME</mat-label>
       <input matInput
              formControlName="firstName"
              readonly>
     </mat-form-field>
     <br>
     <mat-form-field appearance="outline">
-      <mat-label>Last Name</mat-label>
+      <mat-label translate>LAST_NAME</mat-label>
       <input matInput
              formControlName="lastName"
              readonly>
     </mat-form-field>
     <br>
     <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
+      <mat-label translate>EMAIL</mat-label>
       <input matInput
              formControlName="email"
              readonly>

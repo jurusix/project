@@ -1,22 +1,19 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AppService } from '../app.service';
 import { ThemeMode } from '../core/enums/theme-mode';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent {
 
   themeMode = ThemeMode;
 
-  constructor(public appService: AppService) { }
+  constructor(
+    public appService: AppService,
+    public translate: TranslateService) { }
 
-  ngOnInit(): void {
-  }
-
-  changeTheme(mode: ThemeMode): void {
-    this.appService.setTheme(mode);
-  }
 }

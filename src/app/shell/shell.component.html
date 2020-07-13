@@ -20,29 +20,34 @@
          routerLink="/dashboard"
          routerLinkActive="active"
          *ngIf="isAuthenticated | async">
-        <mat-icon>dashboard</mat-icon>&nbsp;Dashboard
+        <mat-icon>dashboard</mat-icon>&nbsp;
+        {{ 'DASHBOARD' | translate }}
       </a>
       <a mat-list-item
          routerLink="/profile"
          routerLinkActive="active"
          *ngIf="isAuthenticated | async">
-        <mat-icon>face</mat-icon>&nbsp;Profile
+        <mat-icon>face</mat-icon>&nbsp;
+        {{ 'PROFILE' | translate }}
       </a>
       <a mat-list-item
          routerLink="/login"
          routerLinkActive="active"
          *ngIf="!(isAuthenticated | async)">
-        <mat-icon>login</mat-icon>&nbsp;Login
+        <mat-icon>login</mat-icon>&nbsp;
+        {{ 'LOGIN' | translate }}
       </a>
       <a mat-list-item
          routerLink="/settings"
          routerLinkActive="active">
-        <mat-icon>settings</mat-icon>&nbsp;Settings
+        <mat-icon>settings</mat-icon>&nbsp;
+        {{ 'SETTINGS' | translate }}
       </a>
       <a mat-list-item
          (click)="logout()"
          *ngIf="isAuthenticated | async">
-        <mat-icon>power_settings_new</mat-icon>&nbsp;Logout
+        <mat-icon>power_settings_new</mat-icon>&nbsp;
+        {{ 'LOGOUT' | translate }}
       </a>
     </mat-nav-list>
   </mat-sidenav>

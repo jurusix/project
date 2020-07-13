@@ -1,18 +1,22 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth/auth.service';
-import { SocialLogin } from '../core/enums/social-login';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent {
-
-  type = SocialLogin;
+export class LoginComponent implements OnInit {
 
   constructor(
-    private authService: AuthService) { }
+    public authService: AuthService,
+    private router: Router) { }
 
-  login(): void { this.authService.login(); }
+  async ngOnInit(): Promise<void> {
+    const status = await this.authService.isAuthenticated$;
+    if (status) {
+      this.router.navigate(['dashboard']);
+    }
+  }
 }

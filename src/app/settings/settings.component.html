@@ -1,16 +1,32 @@
 <div class="grid-container">
-  <h1>Settings</h1>
-  <mat-divider></mat-divider>
-  <br>
-  <h3>PWA Theme</h3>
-  <mat-button-toggle-group [(ngModel)]="appService.activeTheme">
-    <mat-button-toggle value="{{themeMode.Default}}"
-                       (click)="changeTheme(themeMode.Default)">
-      Default
-    </mat-button-toggle>
-    <mat-button-toggle value="{{themeMode.Dark}}"
-                       (click)="changeTheme(themeMode.Dark)">
-      Dark
-    </mat-button-toggle>
-  </mat-button-toggle-group>
+  <form>
+    <h1 translate>SETTINGS</h1>
+    <mat-divider></mat-divider>
+    <br>
+    <h3 translate>PWA_THEME</h3>
+    <mat-button-toggle-group name="theme"
+                             [(ngModel)]="appService.activeTheme">
+      <mat-button-toggle value="{{themeMode.Default}}"
+                         (click)="appService.setTheme(themeMode.Default)">
+        {{ 'DEFAULT' | translate}}
+      </mat-button-toggle>
+      <mat-button-toggle value="{{themeMode.Dark}}"
+                         (click)="appService.setTheme(themeMode.Dark)">
+        {{ 'DARK' | translate}}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    <br>
+    <br>
+    <h3 translate>LANGUAGE</h3>
+    <mat-form-field appearance="fill">
+      <mat-label translate>CURRENT_LANG</mat-label>
+      <mat-select [value]="translate.currentLang"
+                  (selectionChange)="translate.use($event.value)">
+        <mat-option *ngFor="let lang of translate.getLangs()"
+                    [value]="lang">
+          {{ lang | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
 </div>

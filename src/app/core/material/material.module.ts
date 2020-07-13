@@ -12,6 +12,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatButtonToggleModule,
     MatProgressBarModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   exports: [
     MatGridListModule,
@@ -41,7 +43,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatButtonToggleModule,
     MatProgressBarModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   declarations: [],
   providers: [MatSnackBar],

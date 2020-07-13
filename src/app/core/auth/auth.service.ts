@@ -10,7 +10,7 @@ export class AuthService {
 
   private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
-  private redirectUrl = '/dashboard';
+  private redirectUrl = window.location.pathname;
   private isDoneLoadingSubject$ = new ReplaySubject<boolean>();
   public isDoneLoading$ = this.isDoneLoadingSubject$.asObservable();
 
