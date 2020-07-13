@@ -100,6 +100,12 @@ MIT
 @ngx-loading-bar/router
 MIT
 
+@ngx-translate/core
+MIT
+
+@ngx-translate/http-loader
+MIT
+
 angular-oauth2-oidc
 MIT
 Copyright (c) 2017 Manfred Steyer
