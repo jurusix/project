@@ -9,4 +9,5 @@ export const googleAuthCodeFlowConfig: AuthConfig = {
   strictDiscoveryDocumentValidation: false,
   showDebugInformation: false,
   clearHashAfterLogin: false,
+  silentRefreshTimeout: 3000
 };

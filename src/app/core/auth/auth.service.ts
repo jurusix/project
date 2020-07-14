@@ -21,7 +21,7 @@ export class AuthService {
 
   private navigateToLoginPage(): void {
     this.redirectUrl = this.router.url;
-    this.router.navigateByUrl('/login');
+    this.router.navigate(['login']);
   }
 
   constructor(
@@ -53,7 +53,6 @@ export class AuthService {
     this.oauthService.events
       .pipe(filter(e => ['token_received'].includes(e.type)))
       .subscribe(e => this.oauthService.loadUserProfile());
-
 
     this.oauthService.events
       .pipe(filter(e => ['session_terminated', 'session_error', 'logout'].includes(e.type)))
