@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { RouterModule } from '@angular/router';
     LoadingBarRouterModule,
     AppRoutingModule,
     CoreModule.forRoot(),
-    RouterModule
+    RouterModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   bootstrap: [AppShellComponent]
 })
